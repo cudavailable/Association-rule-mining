@@ -148,9 +148,12 @@ if __name__ == '__main__':
 			logger.write(f"Experiment #{total}  Min_Sup : {min_support}, Min_Conf : {min_conf}\n")
 			logger.write("----------------------------------------------\n")
 			logger.write("Hints:\n")
-			logger.write("  1.The following data is organized in (I1, I2, min_conf, min_sup)\n")
+			logger.write("  1.The following data is organized in (I, min_sup) or (I1, I2, min_conf, min_sup)\n")
 			logger.write("  2.All decimals are rounded to 6 decimal places.\n")
-			logger.write("----------------------------------------------\n")
+			logger.write("-----------------------Frequent Item Sets-----------------------\n")
+			for item in support_data.keys():
+				logger.write(f"{list(item)}  {support_data[item]:.6f}\n")
+			logger.write("-----------------------Strong Association rules-----------------------\n")
 			for i, big_rule in enumerate(big_rule_list):
 				I1 = list(big_rule[0])
 				I2 = list(big_rule[1])
