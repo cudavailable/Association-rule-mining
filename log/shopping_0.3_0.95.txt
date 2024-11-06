@@ -1,10 +1,14 @@
 Experiment #16  Min_Sup : 0.3, Min_Conf : 0.95
 ----------------------------------------------
-1 ['散装休闲食品', '进口食品'] ['饮料'] 0.950207468879668 0.306970509383378
-2 ['进口食品', '常温熟食类'] ['饮料'] 0.9699570815450643 0.30294906166219837
-3 ['散装休闲食品', '常温熟食类'] ['饮料'] 0.9510204081632653 0.31233243967828417
+Hints:
+  1.The following data is organized in (I1, I2, min_conf, min_sup)
+  2.All decimals are rounded to 6 decimal places.
+----------------------------------------------
+1  ['散装休闲食品', '常温熟食类']  ['饮料']  0.951020  0.312332
+2  ['进口食品', '常温熟食类']  ['饮料']  0.969957  0.302949
+3  ['散装休闲食品', '进口食品']  ['饮料']  0.950207  0.306971
 
 
 Association rules mining has completed.
 
-The time spending on Apriori (seconds): 0.016454
+The time spending on Apriori (seconds): 0.015761

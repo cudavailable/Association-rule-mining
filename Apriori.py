@@ -147,43 +147,15 @@ if __name__ == '__main__':
 			# save the mining result
 			logger.write(f"Experiment #{total}  Min_Sup : {min_support}, Min_Conf : {min_conf}\n")
 			logger.write("----------------------------------------------\n")
+			logger.write("Hints:\n")
+			logger.write("  1.The following data is organized in (I1, I2, min_conf, min_sup)\n")
+			logger.write("  2.All decimals are rounded to 6 decimal places.\n")
+			logger.write("----------------------------------------------\n")
 			for i, big_rule in enumerate(big_rule_list):
 				I1 = list(big_rule[0])
 				I2 = list(big_rule[1])
-				logger.write(f"{i+1} {I1} {I2} {big_rule[2]} {big_rule[3]}\n")
+				logger.write(f"{i+1}  {I1}  {I2}  {big_rule[2]:.6f}  {big_rule[3]:.6f}\n")
 
 			logger.write("\n\nAssociation rules mining has completed.\n\n")
 			logger.write(f"The time spending on Apriori (seconds): {duration:.6f}\n")
 			total += 1
-
-exit(0)
-
-
-# print(dataset)
-for i, big_rule in enumerate(big_rule_list):
-	print(f"{i+1} {big_rule}")
-
-exit(0)
-dataset = [[1, 2], [1, 3], [1, 2, 4], [4], [1, 4]]
-
-L, support_data = generate_L(dataset, 2, min_support=0.4)
-print(L)
-print(support_data)
-big_rules = generate_big_rules(L, support_data, min_conf=0.6)
-print(big_rules)
-exit(0)
-C1 = create_C1(dataset)
-# for item in C1:
-# 	print(item)
-# print(C1)
-support_data = {}
-L1 = generate_Lk_by_Ck(dataset, C1, min_support=0.6, support_data=support_data)
-print(L1)
-print(support_data)
-print("-------------")
-C2 = create_Ck(L1, 2)
-print(C2)
-print("-------------")
-L2 = generate_Lk_by_Ck(dataset, C2, min_support=0.2, support_data=support_data)
-print(L2)
-print(support_data)
