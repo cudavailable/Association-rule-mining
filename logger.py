@@ -10,7 +10,7 @@ class Logger(object):
             fdir = os.path.dirname(fpath)
             if fdir is not None and not os.path.exists(fdir):
                 os.makedirs(fdir)
-            self.file = open(fpath, 'w')
+            self.file = open(fpath, 'w', encoding='utf-8')
 
     def __del__(self):
         self.close()
