@@ -1,6 +1,7 @@
 import os
 import time
 import openpyxl
+from logger import Logger
 
 def load_dataset(data_path):
 	""" load data from a specific path """
@@ -115,17 +116,52 @@ def generate_big_rules(L, support_data, min_conf):
 
 	return big_rules
 
-# load your dataset and mine strong association rules
-data_path = r"./Database/dataset.xlsx"
-dataset = load_dataset(data_path)
+class config:
+	""" combinations of support and confidence """
+	support_list = [0.05, 0.1, 0.2, 0.3]
+	conf_list = [0.8, 0.85, 0.9, 0.95]
 
-L, support_data = generate_L(dataset, k=3, min_support=0.01)
-big_rule_list = generate_big_rules(L, support_data, min_conf=0.9)
+if __name__ == '__main__':
+	# load your dataset and mine strong association rules
+	data_path = r"./Database/dataset.xlsx"
+	dataset = load_dataset(data_path)
+
+	log_dir = r"./log"
+	if log_dir is not None and not os.path.exists(log_dir):
+		os.mkdir(log_dir)
+
+	total = 1 # record how many experiments have been completed
+	for min_support in config.support_list:
+		for min_conf in config.conf_list:
+			# create specific logger
+			title = "shopping" + "_" + str(min_support) + "_" + str(min_conf) + ".txt"
+			logger = Logger(os.path.join(log_dir, title))
+
+			# association rules mining
+			start_time = time.time()
+			L, support_data = generate_L(dataset, k=3, min_support=min_support)
+			big_rule_list = generate_big_rules(L, support_data, min_conf=min_conf)
+			end_time = time.time()
+			duration = end_time - start_time
+
+			# save the mining result
+			logger.write(f"Experiment #{total}  Min_Sup : {min_support}, Min_Conf : {min_conf}\n")
+			logger.write("----------------------------------------------\n")
+			for i, big_rule in enumerate(big_rule_list):
+				I1 = list(big_rule[0])
+				I2 = list(big_rule[1])
+				logger.write(f"{i+1} {I1} {I2} {big_rule[2]} {big_rule[3]}\n")
+
+			logger.write("\n\nAssociation rules mining has completed.\n\n")
+			logger.write(f"The time spending on Apriori (seconds): {duration:.6f}\n")
+			total += 1
+
+exit(0)
 
 
 # print(dataset)
-# for i, big_rule in enumerate(big_rule_list):
-# 	print(f"{i} {big_rule}")
+for i, big_rule in enumerate(big_rule_list):
+	print(f"{i+1} {big_rule}")
 
 exit(0)
 dataset = [[1, 2], [1, 3], [1, 2, 4], [4], [1, 4]]
