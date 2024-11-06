@@ -1,3 +1,25 @@
+import os
+import time
+import openpyxl
+
+def load_dataset(data_path):
+	""" load data from a specific path """
+	workbook = openpyxl.load_workbook(data_path)
+	sheet = workbook['Sheet3']
+
+	rows = sheet.max_row + 1
+	cols = sheet.max_column + 1
+
+	dataset = []
+	for i in range(1, rows):
+		temp = []
+		for j in range(1, cols):
+			cell = sheet.cell(i, j).value
+			if cell:
+				temp.append(cell)
+		dataset.append(temp)
+
+	return dataset
 
 def create_C1(dataset):
 	""" create an initial candidate set """
@@ -93,7 +115,19 @@ def generate_big_rules(L, support_data, min_conf):
 
 	return big_rules
 
+# load your dataset and mine strong association rules
+data_path = r"./Database/dataset.xlsx"
+dataset = load_dataset(data_path)
 
+L, support_data = generate_L(dataset, k=3, min_support=0.01)
+big_rule_list = generate_big_rules(L, support_data, min_conf=0.9)
+
+
+# print(dataset)
+# for i, big_rule in enumerate(big_rule_list):
+# 	print(f"{i} {big_rule}")
+
+exit(0)
 dataset = [[1, 2], [1, 3], [1, 2, 4], [4], [1, 4]]
 
 L, support_data = generate_L(dataset, 2, min_support=0.4)
